@@ -1,0 +1,43 @@
+@(title: String)(content: Html)
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@title</title>
+    <link rel='shortcut icon' type='image/png' href='@routes.Assets.at("images/favicon.png")'>
+    <link rel='stylesheet' href='@routes.WebJarAssets.at(WebJarAssets.locate("bootstrap.min.css"))'>
+    <link rel='stylesheet' href='@routes.Assets.at("stylesheets/main.css")'>
+    <link href='http://fonts.googleapis.com/css?family=Black+Ops+One' rel='stylesheet' type='text/css'>
+    <script type='text/javascript' src='@routes.WebJarAssets.at(WebJarAssets.locate("jquery.min.js"))'></script>
+    <style>
+    body {
+        margin-top: 50px;
+    }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div ><a class="navbar-brand" href="/">invoice</a></div>
+
+    </div>
+
+    <div>
+        <ul class="nav nav-tabs" role="navigation">
+            <li class="active"><a href="/">Home</a></li>
+            <li><a href="#">News</a></li>
+            <li><a href="#">Contact</a></li>
+            <li><a href="#">About</a></li>
+            <ul class="nav navbar-nav navbar-right">
+                <a class="btn btn-default navbar-btn" href="/login" role="button">Sign in</a>
+            </ul>
+        </ul>
+    </div>
+</nav>
+
+<hr/>
+    <div class="container">
+        @content
+    </div>
+</body>
+</html>

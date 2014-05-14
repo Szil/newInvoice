@@ -1,0 +1,36 @@
+body {
+        margin: 50px;
+    }
+    .navbar-brand {
+    	font-family: 'Black Ops One', cursive;
+    	font-size:28px;
+    	-webkit-transform: skew(-15deg);
+    	-ms-transform: skew(-15deg);
+    }
+    .nav-tabs {
+    	background-color: rgba(150, 137, 62, 1);
+		box-shadow: -10px 0px 6px #888888;
+    }
+    .active {
+        color: black;
+    }
+    ul {
+    	-webkit-transform: skew(-15deg);
+    	-ms-transform: skew(-15deg);
+    }
+    .navbar-default {
+    font-size: 16px;
+    }
+    .navbar-btn {
+    padding-right: 50px;
+    }
+    .navbar-nav>li>a {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    }
+    .nav-tabs>li>a {
+    color: #FFF;
+    }
+    .nav-tabs>li>a:hover {
+        color: #000;
+     }
