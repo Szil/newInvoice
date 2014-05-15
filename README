@@ -2,3 +2,11 @@ This is your new Play application
 =====================================
 
 This file will be packaged with your application, when using `play dist`.
+
+-- Change log --
+"first" - 2014-05-14 09:14:11
+ - init project struct.
+ 
+"Create user" - 2014-05-16 01:35:13
+ - implement createUser
+ TODO: proper form.errors 
