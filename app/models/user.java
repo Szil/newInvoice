@@ -5,37 +5,37 @@ package models;
  */
 import javax.persistence.*;
 
+import play.data.format.Formats;
 import play.data.validation.*;
 import play.db.ebean.*;
 
 import java.util.List;
 
 @Entity
-@Table(name = "User")
-@SequenceGenerator(name = "user_seq", sequenceName = "user_seq")
+@Table(name = "Account")
 public class user extends Model{
 
+    private static final long serialVersionUID = 1L;
+
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq")
-    private Long uid;
+    @Constraints.Required
+    @Formats.NonEmpty
+    private String email;
 
     @Constraints.Required
     private String name;
 
     @Constraints.Required
-    private String email;
-
-    @Constraints.Required
     private String password;
 
-    public Long getuid() {
-        return uid;
+    // -- Contructor
+    public user(String email, String name, String password) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
     }
 
-    public void setuid(Long uid) {
-        this.uid = uid;
-    }
-
+    // -- Set/Get maybe removable
     public String getName() {
         return name;
     }
@@ -60,21 +60,40 @@ public class user extends Model{
         this.password = password;
     }
 
-    @Override
-    public String toString() {
-        return "Simple [uid=" + uid + ", name=" + name + "]";
-    }
+    // -- Queries
 
     public static Model.Finder<String,user> find = new Model.Finder<String,user>(String.class, user.class);
 
-    public static user findById(Long uid) {
-        return find.where().eq("uid", uid).findUnique();
+    // -- All user
+    public static List<user> findAll() {
+        return find.all();
     }
 
+    // -- Retrive user by email
+    public static user findByEmail(String email) {
+        return find.where().eq("email", email).findUnique();
+    }
+
+    // -- Authenticate a user
     public static user authenticate(String email, String password) {
         return find.where()
                 .eq("email", email)
                 .eq("password", password)
                 .findUnique();
+    }
+
+    // -- Create a user
+    public static user create(String email, String name, String password) {
+        if (email != "" && name != "" && password != "") {
+            user newUser = new user(email, name, password);
+            newUser.save();
+            return newUser;
+        }
+       else return null;
+    }
+
+    @Override
+    public String toString() {
+        return "User(" + email + ")";
     }
 }

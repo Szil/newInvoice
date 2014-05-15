@@ -10,14 +10,23 @@ import models.*;
 import views.html.*;
 
 public class Application extends Controller {
-    
+
+    @Security.Authenticated(Secured.class)
     public static Result index() {
-        return ok(views.html.index.render("Hello Stranger!"));
+        return ok(views.html.index.render(getUserName(Http.Context.current())));
     }
 
     public static Result login() {
         return ok(
                 login.render(form(Login.class))
+        );
+    }
+
+    public static Result logout() {
+        session().clear();
+        flash("success", "You've been logged out");
+        return redirect(
+                controllers.routes.Application.login()
         );
     }
 
@@ -34,6 +43,27 @@ public class Application extends Controller {
         }
     }
 
+    public static Result register() {
+        return ok(
+                register.render(form(Register.class))
+        );
+    }
+
+    public static Result createUser() {
+        Form<Register> registerForm = Form.form(Register.class).bindFromRequest();
+        if (registerForm.hasErrors() || user.findByEmail(registerForm.get().email) != null) {
+            return badRequest(register.render(registerForm));
+        } else {
+            session().clear();
+            String email = registerForm.get().email;
+            String name = registerForm.get().name;
+            String password = registerForm.get().password;
+            user.create(email, name, password);
+            flash("success", "You may login now.");
+            return redirect(controllers.routes.Application.index());
+        }
+    }
+
     public static class Login {
         @Constraints.Required
         public String email;
@@ -45,5 +75,19 @@ public class Application extends Controller {
             }
             return null;
         }
+    }
+
+    public static class Register {
+
+        @Constraints.Required
+        public String email;
+        public String name;
+        public String password;
+    }
+
+    public static String getUserName(Http.Context ctx) {
+        user crt = user.findByEmail(ctx.session().get("email"));
+        if(crt != null) return crt.getName();
+        else return "Not logged in";
     }
 }

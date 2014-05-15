@@ -3,7 +3,12 @@
 @main("Hello Invoice!") {
 
     <div class="well">
-        <h1>@message</h1>
+        <h1>Welcome @message !</h1>
+        @if(flash.contains("success")) {
+        <p class="success text-success">
+            @flash.get("success")
+        </p>
+        }
     </div>
 
 }
