@@ -12,7 +12,6 @@ import play.db.ebean.*;
 import java.util.List;
 
 @Entity
-@Table(name = "Account")
 public class user extends Model{
 
     private static final long serialVersionUID = 1L;
