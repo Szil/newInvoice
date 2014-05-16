@@ -6,7 +6,7 @@ body {
     	font-size:3.1em;
     	-webkit-transform: skew(-15deg);
     	-ms-transform: skew(-15deg);
-    	padding-top: 30px;
+    	padding-top: 20px;
     }
     .nav-tabs {
     	background-color: rgba(150, 137, 62, 1);
