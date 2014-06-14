@@ -1,13 +1,17 @@
 package controllers;
 
-import play.data.*;
-import static play.data.Form.*;
-
+import models.user;
+import play.data.Form;
 import play.data.validation.Constraints;
-import play.mvc.*;
+import play.mvc.Controller;
+import play.mvc.Http;
+import play.mvc.Result;
+import play.mvc.Security;
+import views.html.dashboard;
+import views.html.login;
+import views.html.register;
 
-import models.*;
-import views.html.*;
+import static play.data.Form.form;
 
 public class Application extends Controller {
 
@@ -20,6 +24,10 @@ public class Application extends Controller {
         return ok(
                 login.render(form(Login.class))
         );
+    }
+
+    public static Result dashboard(){
+        return ok(dashboard.render(user.findAll()));
     }
 
     public static Result logout() {
@@ -38,29 +46,8 @@ public class Application extends Controller {
             session().clear();
             session("email", loginForm.get().email);
             return redirect(
-                    controllers.routes.Application.index()
+                    controllers.routes.Application.dashboard()
             );
-        }
-    }
-
-    public static Result register() {
-        return ok(
-                register.render(form(Register.class))
-        );
-    }
-
-    public static Result createUser() {
-        Form<Register> registerForm = Form.form(Register.class).bindFromRequest();
-        if (registerForm.hasErrors() || user.findByEmail(registerForm.get().email) != null) {
-            return badRequest(register.render(registerForm));
-        } else {
-            session().clear();
-            String email = registerForm.get().email;
-            String name = registerForm.get().name;
-            String password = registerForm.get().password;
-            user.create(email, name, password);
-            flash("success", "You may login now.");
-            return redirect(controllers.routes.Application.index());
         }
     }
 
@@ -68,22 +55,17 @@ public class Application extends Controller {
         @Constraints.Required
         public String email;
         public String password;
+        public user.szKor uRole;
 
         public String validate() {
             if (user.authenticate(email, password) == null) {
-                return "Invalid user or password";
+                return "Invalid login";
             }
             return null;
         }
     }
 
-    public static class Register {
 
-        @Constraints.Required
-        public String email;
-        public String name;
-        public String password;
-    }
 
     public static String getUserName(Http.Context ctx) {
         user crt = user.findByEmail(ctx.session().get("email"));

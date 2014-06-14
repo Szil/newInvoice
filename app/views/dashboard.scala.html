@@ -1,10 +1,36 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
+@(users: List[user])
 
-</body>
-</html>
+@main("New Invoice Dashboard") {
+<h1>Users</h1>
+<div class="well">
+
+    <table class="table">
+        <tr>
+            <th>Email</th>
+            <th>Name</th>
+            <th>Password</th>
+            <th>Role</th>
+        </tr>
+
+        @for(user <- users) {
+        <tr>
+            <td>@user.getEmail()</td>
+            <td>@user.getName()</td>
+            <td>@user.getPassword()</td>
+            <td>@user.getuRole()</td>
+        </tr>
+        }
+    </table>
+
+    </div>
+<p>
+<a class="btn btn-default" href="@routes.Users.register()">Create user</a>
+</p>
+    @if(flash.contains("success")) {
+    <p class="success text-success">
+        @flash.get("success")
+    </p>
+    }
+</div>
+
+}

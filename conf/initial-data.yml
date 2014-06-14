@@ -7,18 +7,22 @@ users:
         email:      guillaume@sample.com
         name:       Guillaume Bort
         password:   secret
+        uRole:       KONYVELO
     
     - !!models.user
         email:      maxime@sample.com
         name:       Maxime Dantec
         password:   secret
+        uRole:       ADMINISZTRATOR
     
     - !!models.user
         email:      sadek@sample.com
         name:       Sadek Drobi
         password:   secret
+        uRole:       SZAMLAZO
     
     - !!models.user
         email:      erwan@sample.com
         name:       Erwan Loisant
         password:   secret
+        uRole:       SZAMLAZO

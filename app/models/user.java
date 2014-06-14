@@ -3,44 +3,47 @@ package models;
 /**
  * Created by Szil on 2014.05.10..
  */
-import javax.persistence.*;
+import com.avaje.ebean.annotation.EnumMapping;
+import play.data.validation.Constraints;
+import play.db.ebean.Model;
 
-import play.data.format.Formats;
-import play.data.validation.*;
-import play.db.ebean.*;
-
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.List;
 
 @Entity
+@Table(name = "i_user")
 public class user extends Model{
-
-    private static final long serialVersionUID = 1L;
 
     @Id
     @Constraints.Required
-    @Formats.NonEmpty
+    @Constraints.Email
     private String email;
 
     @Constraints.Required
     private String name;
 
     @Constraints.Required
+    @Constraints.Min(5)
     private String password;
 
-    // -- Contructor
-    public user(String email, String name, String password) {
-        this.name = name;
-        this.email = email;
-        this.password = password;
+    @EnumMapping(nameValuePairs = "ADMINISZTRATOR=A,KONYVELO=K,SZAMLAZO=S")
+    public enum szKor {
+        ADMINISZTRATOR,
+        KONYVELO,
+        SZAMLAZO
     }
 
-    // -- Set/Get maybe removable
-    public String getName() {
-        return name;
+    @Constraints.Required
+    private szKor uRole;
+
+    public szKor getuRole() {
+        return uRole;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setuRole(szKor uRole) {
+        this.uRole = uRole;
     }
 
     public String getEmail() {
@@ -51,6 +54,14 @@ public class user extends Model{
         this.email = email;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getPassword() {
         return password;
     }
@@ -58,6 +69,16 @@ public class user extends Model{
     public void setPassword(String password) {
         this.password = password;
     }
+
+    // -- Contructor
+
+    public user(String email, String name, String password, szKor uRole) {
+        this.email = email;
+        this.name = name;
+        this.password = password;
+        this.uRole = uRole;
+    }
+
 
     // -- Queries
 
@@ -78,13 +99,14 @@ public class user extends Model{
         return find.where()
                 .eq("email", email)
                 .eq("password", password)
+                .eq("uRole", szKor.ADMINISZTRATOR)
                 .findUnique();
     }
 
     // -- Create a user
-    public static user create(String email, String name, String password) {
+    public static user create(String email, String name, String password, szKor role) {
         if (email != "" && name != "" && password != "") {
-            user newUser = new user(email, name, password);
+            user newUser = new user(email, name, password, role);
             newUser.save();
             return newUser;
         }
