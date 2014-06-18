@@ -1,36 +1,13 @@
-@(users: List[user])
 
-@main("New Invoice Dashboard") {
-<h1>Users</h1>
-<div class="well">
-
-    <table class="table">
-        <tr>
-            <th>Email</th>
-            <th>Name</th>
-            <th>Password</th>
-            <th>Role</th>
-        </tr>
-
-        @for(user <- users) {
-        <tr>
-            <td>@user.getEmail()</td>
-            <td>@user.getName()</td>
-            <td>@user.getPassword()</td>
-            <td>@user.getuRole()</td>
-        </tr>
-        }
-    </table>
-
-    </div>
-<p>
-<a class="btn btn-default" href="@routes.Users.register()">Create user</a>
-</p>
-    @if(flash.contains("success")) {
-    <p class="success text-success">
-        @flash.get("success")
-    </p>
-    }
-</div>
+@template("New Invoice Dashboard") {
+<nav class="navbar navbar-default" role="navigation">
+        <div class="navbar-header"><span class="navbar-brand">Dashboard</span></div>
+        <a class="btn btn-default crUser" href="#/register">Create user</a>
+</nav>
+@if(flash.contains("error")) {
+<p class="error text-error">
+    @flash.get("error")
+</p> }
+<div class="container-fluid" ng-view></div>
 
 }

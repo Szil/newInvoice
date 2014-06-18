@@ -1,13 +1,8 @@
 @(form: Form[Users.Register])
-@main("Register") {
-
 
 @helper.form(routes.Users.createUser) {
 <h1>Register</h1>
-@if(flash.contains("error")) {
-<p class="error text-error">
-    @flash.get("error")
-</p> }
+
     <p>
         <input type="email" class="form-control" name="email" placeholder="Email" value="@form("email").value">
     </p>
@@ -23,11 +18,10 @@
         <option value="ADMINISZTRATOR">Adminisztrátor</option>
     </select>
 <p>
-        <button type="submit" class="btn btn-default">Register</button>
+        <button type="submit" class="btn btn-default crUser">Register</button>
     </p>
         @if(form.hasGlobalErrors) {
         <p class="error">
             @form.globalError.message
         </p> }
-}
 }

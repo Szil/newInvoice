@@ -1,0 +1,27 @@
+<div class="table-responsive">
+
+    <table class="table">
+        <tr>
+            <th>Email</th>
+            <th>Name</th>
+            <th>Password</th>
+            <th>Role</th>
+        </tr>
+
+        <tr ng-repeat="user in users">
+            <td>{{user.email}}</td>
+            <td>{{user.name}}</td>
+            <td>{{user.password}}</td>
+            <td>{{user.uRole}}</td>
+        </tr>
+
+    </table>
+
+</div>
+
+@if(flash.contains("success")) {
+<p class="success text-success">
+    @flash.get("success")
+</p>
+}
+</div>

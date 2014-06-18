@@ -1,41 +1,17 @@
-body {
-        margin: 50px;
-    }
-    .navbar-brand {
+
+.brand {
     	font-family: 'Black Ops One', cursive;
-    	font-size:3.1em;
-    	-webkit-transform: skew(-15deg);
-    	-ms-transform: skew(-15deg);
-    	padding-top: 20px;
-    }
-    .nav-tabs {
-    	background-color: rgba(150, 137, 62, 1);
-		box-shadow: -10px 0px 6px #888888;
-    }
-    .active {
-        color: black;
-    }
-    ul {
+    	font-size:2.1em;
     	-webkit-transform: skew(-15deg);
     	-ms-transform: skew(-15deg);
     }
-    .navbar-default {
-    font-size: 16px;
-    }
-    .navbar-btn {
-    padding-right: 50px;
-    }
-    .navbar-nav>li>a {
-    padding-top: 10px;
-    padding-bottom: 10px;
-    }
-    .nav-tabs>li>a {
-    color: #FFF;
-    }
-    .nav-tabs>li>a:hover {
-        color: #000;
-     }
-    .container {
+
+.container {
     background-color: #F1F1F1;
-    width: 40%;
+
     }
+
+.crUser {
+    float: right;
+    margin: 10px;
+}

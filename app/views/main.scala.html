@@ -10,18 +10,13 @@
     <script type="text/javascript" src="@routes.Assets.at("javascripts/main.js")"></script>
     <link href='http://fonts.googleapis.com/css?family=Black+Ops+One' rel='stylesheet' type='text/css'>
     <script type='text/javascript' src='@routes.WebJarAssets.at(WebJarAssets.locate("jquery.min.js"))'></script>
-    <style>
-    body {
-        margin-top: 50px;
-    }
-    </style>
 </head>
 <body>
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div ><a class="navbar-brand" href="/">invoice</a></div>
         @if(ctx.session().get("email") != null) {
-        <dl id="user" class="navbar-text navbar-right">
+        <dl id="user" class="navbar-text navbar-right login">
             <dt>@Application.getUserName(Http.Context.current())</dt>
             <dd>
                 <a class="navbar-link" href="@routes.Application.logout()">Logout</a>
@@ -33,8 +28,8 @@
 
     <div>
         <ul class="nav nav-tabs" role="navigation">
-            <li class="active"><a href="/">Home</a></li>
-            <li><a href="@routes.Application.dashboard()">Dashboard</a></li>
+            <li><a href="/">Home</a></li>
+            <li class="active"><a href="@routes.Application.dashboard()">Dashboard</a></li>
             <!--<li><a href="#">Contact</a></li>
             <li><a href="#">About</a></li>-->
             @if(ctx.session().get("email") == null) {

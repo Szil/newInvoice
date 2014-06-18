@@ -17,7 +17,7 @@ public class Application extends Controller {
 
     @Security.Authenticated(Secured.class)
     public static Result index() {
-        return ok(views.html.index.render(getUserName(Http.Context.current())));
+        return redirect(controllers.routes.Application.dashboard());
     }
 
     public static Result login() {
@@ -27,7 +27,7 @@ public class Application extends Controller {
     }
 
     public static Result dashboard(){
-        return ok(dashboard.render(user.findAll()));
+        return ok(dashboard.render());
     }
 
     public static Result logout() {

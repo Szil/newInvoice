@@ -1,0 +1,54 @@
+@(title: String)(content: Html)
+
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>@title</title>
+    <link rel='shortcut icon' type='image/png' href='@routes.Assets.at("images/favicon.png")'>
+    <!-- Bootstrap + custom style -->
+    <link rel='stylesheet' href='@routes.WebJarAssets.at(WebJarAssets.locate("bootstrap.min.css"))'>
+    <link rel='stylesheet' href='@routes.Assets.at("stylesheets/main.css")'>
+    <!-- Custom font -->
+    <link href='http://fonts.googleapis.com/css?family=Black+Ops+One' rel='stylesheet' type='text/css'>
+    <!-- AngularJS -->
+    <script src="https://code.angularjs.org/1.2.18/angular.min.js"></script>
+    <script src="https://code.angularjs.org/1.2.18/angular-route.min.js"></script>
+    <script src="https://code.angularjs.org/1.2.18/angular-resource.min.js"></script>
+    <!-- JQuery -->
+    <script type='text/javascript' src='@routes.WebJarAssets.at(WebJarAssets.locate("jquery.min.js"))'></script>
+    <!-- Custom script -->
+    <script type='text/javascript' src='@routes.Assets.at("javascripts/main.js")'></script>
+</head>
+<body>
+<header class="header header-fixed-top" role="navigation">
+    <section class="navbar navbar-inverse">
+            <div >
+                <div class="header-branding">
+                    <a class="brand navbar-brand" href="">invoice</a>
+                    <ul class="nav navbar-nav">
+                        <li class="divider-vertical"></li>
+                        <li><a href="/">Home</a></li>
+                        <li class="divider-vertical"></li>
+                        <li><a href="#/dashboard">Dashboard</a></li>
+                    </ul>
+                </div>
+                @if(ctx.session().get("email") != null) {
+                <div>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><span class="navbar-text">@Application.getUserName(Http.Context.current())</span></li>
+                        <li><a class="navbar-link" href="@routes.Application.logout()">Logout</a></li>
+                        <li class="divider-vertical"></li>
+                        <li><a></a></li>
+                    </ul>
+                </div>
+                }
+            </div>
+    </section>
+</header>
+
+<div class="container" ng-app="adminModule">
+    @content
+</div>
+</body>
+</html>

@@ -1,12 +1,18 @@
 package controllers;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import models.user;
 import play.data.Form;
 import play.data.validation.Constraints;
+import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
 import views.html.register;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static play.data.Form.form;
 
@@ -15,6 +21,10 @@ import static play.data.Form.form;
  */
 @Security.Authenticated(Secured.class)
 public class Users extends Controller{
+
+    public static Result index(){
+        return ok(views.html.users.userList.render());
+    }
 
     public static Result register() {
         return ok(
@@ -37,6 +47,18 @@ public class Users extends Controller{
             flash("success", "User created");
             return redirect(controllers.routes.Application.dashboard());
         }
+    }
+
+    public static Result users() {
+
+        ObjectMapper mapper = new ObjectMapper();
+        List<user> userList = new ArrayList<>();
+        userList = user.findAll();
+        JsonNode users = Json.toJson(userList);
+        if (userList.isEmpty()) {
+            return badRequest("No users found");
+        }
+        return ok(users);
     }
 
     public static class Register {
