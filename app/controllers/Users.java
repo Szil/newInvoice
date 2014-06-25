@@ -44,8 +44,9 @@ public class Users extends Controller{
         }
     }
 
-    public static Result delete(String id){
-        user.find.ref(id).delete();
+    public static Result delete(){
+        JsonNode req = request().body().asJson();
+        user.find.ref(req.get("email").asText()).delete();
         return ok();
     }
 

@@ -18,16 +18,16 @@ adminModule = angular.module 'adminModule', ['ngRoute', 'ngResource', 'userServi
 
 adminModule.config ($routeProvider) ->
 	$routeProvider
-		.when('/dashboard', {
-			templateUrl: 'dashboard/index',
+		.when('/', {
+			templateUrl: '/dashboard/index',
 			controller: 'userListCtrl'
 			})
-		.when('/dashboard/register', {
+		.when('/register', {
 			templateUrl: '/dashboard/registerForm',
 			controller: 'createUserCtrl'
 			})
-		.when('/user/delete/:userId', {
-			templateUrl: '/user/delete/:userId'
+		.when('/user/delete', {
+			templateUrl: '/user/delete'
 			controller: 'deleteUserCtrl'
 			})
 		.otherwise({
@@ -38,22 +38,26 @@ adminModule.config ($routeProvider) ->
 # Controllers
 
 adminModule.controller 'userListCtrl', [
-  '$scope', 'Users', ($scope, Users) ->
-    $scope.users = Users.query()
+  '$scope', 'Users', 'deleteUser', ($scope, Users) ->
+       $scope.users = Users.query()
+       $scope.delUser = () ->
+        destUser $scope.user
 ]
 
 adminModule.controller 'createUserCtrl', 
   ($scope, $location, createUser) ->
     $scope.save = () ->
      createUser.save $scope.user
-     $location.path '/dashboard'
+     $scope.users = Users.query()
+     $location.path '/'
 
-adminModule.controller 'deleteUserCtrl',
-  ($scope, $location, deleteUser) ->
-  	$scope.delete = () ->
-  	  destroyUser.destroy 
-  	  $location.path '/dashboard'
-	
+
+adminModule.controller 'deleteUserCtrl', [
+  '$scope', 'deleteUser', ($scope, $location, deleteUser) ->
+        $scope.deleteUser = () ->
+            destUser $scope.user
+            $location.path '/'
+]
 
 # User service
 
@@ -73,6 +77,6 @@ userServices.factory 'createUser', ['$resource',
 
 userServices.factory 'deleteUser', ['$resource',
 	($resource) ->
-    	$resource '/user/delete/:userId', {}, {
-    		destroy: {method: 'POST', params: {userId}}
+    	$resource '/user/delete/', {}, {
+    		destUser: {method: 'POST', params: {}}
     	}]

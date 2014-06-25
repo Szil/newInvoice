@@ -3,6 +3,13 @@
 
 # --- !Ups
 
+create table currency (
+  currency_id               integer auto_increment not null,
+  currency_key              varchar(255),
+  name                      varchar(255),
+  constraint pk_currency primary key (currency_id))
+;
+
 create table invoice (
   invoice_id                varchar(255) not null,
   issuer                    integer,
@@ -41,6 +48,7 @@ create table product (
   prod_name                 varchar(255),
   unit_of_measure           varchar(255),
   unit_price                double,
+  tax_percent               double,
   currency                  integer,
   constraint pk_product primary key (prod_id))
 ;
@@ -68,6 +76,8 @@ create index ix_products_invoice_1 on products (invoice_invoice_id);
 # --- !Downs
 
 SET FOREIGN_KEY_CHECKS=0;
+
+drop table currency;
 
 drop table invoice;
 

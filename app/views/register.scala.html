@@ -9,19 +9,19 @@
     <div class="form-group" ng-class="{'has-error' : userForm.email.$invalid && !userForm.email.$pristine}">
         <label>Email</label>
         <input type="email" name="email" class="form-control" placeholder="Email" ng-model="user.email" required>
-        <p ng-show="userForm.name.$invalid && !userForm.name.$pristine" class="help-block">Please enter a valid email.</p>
+        <p ng-show="userForm.email.$invalid && !userForm.email.$pristine" class="help-block">Please enter a valid email.</p>
     </div>
     <!-- Name -->
     <div class="form-group" ng-class="{'has-error' : userForm.name.$invalid && userForm.name.$pristine}">
         <label>Name</label>
         <input type="name" name="name" class="form-control" placeholder="Name" ng-model="user.name">
-        <p ng-show="!userForm.name.$pristine" class="help-block">Please enter your name.</p>
+        <p ng-show="userForm.name.$invalid && !userForm.name.$pristine" class="help-block">Please enter your name.</p>
     </div>
     <!-- Password -->
     <div class="form-group" ng-class="{'has-error' : userForm.password.$invalid && !userForm.password.$pristine}">
         <label>Password</label>
         <input type="password" name="password" class="form-control" placeholder="Password" ng-model="user.password" ng-minlength="4" required>
-        <p ng-show="!userForm.password.$pristine" class="help-block">Please enter a password.</p>
+        <p ng-show="userForm.password.$pristine" class="help-block">Please enter a password.</p>
         <p ng-show="userForm.password.$error.minlength" class="help-block">Password is too short.</p>
     </div>
     <!-- Role -->
@@ -32,7 +32,7 @@
         <option value="SZAMLAZO">Számlázó</option>
         <option value="ADMINISZTRATOR">Adminisztrátor</option>
     </select>
-        <p ng-show="!userForm.uRole.$pristine" class="help-block">Please select a Role.</p>
+        <p ng-show="userForm.uRole.$pristine" class="help-block">Please select a Role.</p>
     </div>
 
     <!-- Submit -->
