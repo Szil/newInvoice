@@ -16,8 +16,9 @@ GET     /logout                     controllers.Application.logout()
 # User handling
 GET     /dashboard/index            controllers.Users.index()
 GET     /user/userList              controllers.Users.users()
-GET     /register                   controllers.Users.register()
-POST    /register                   controllers.Users.createUser()
+GET     /dashboard/registerForm     controllers.Users.register()
+POST    /user/createUser            controllers.Users.createUser()
+POST    /user/delete/:userId        controllers.Users.delete(userId: String)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

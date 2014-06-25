@@ -9,7 +9,6 @@ import play.mvc.Result;
 import play.mvc.Security;
 import views.html.dashboard;
 import views.html.login;
-import views.html.register;
 
 import static play.data.Form.form;
 

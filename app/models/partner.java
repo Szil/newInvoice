@@ -7,14 +7,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 /**
- * Created by Gergo on 2014.05.20..
+ * Created by Gergo on 2014.06.24..
  */
 @Entity
-public class organisation  extends Model {
+public class partner extends Model {
 
     @Id
     @GeneratedValue
-    private Integer orgId;
+    private Integer partnerId;
 
     private String name;
 

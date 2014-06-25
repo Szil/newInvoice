@@ -1,9 +1,7 @@
 package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import models.user;
-import play.data.Form;
 import play.data.validation.Constraints;
 import play.libs.Json;
 import play.mvc.Controller;
@@ -11,10 +9,7 @@ import play.mvc.Result;
 import play.mvc.Security;
 import views.html.register;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import static play.data.Form.form;
 
 /**
  * Created by Gergo on 2014.06.14..
@@ -28,31 +23,34 @@ public class Users extends Controller{
 
     public static Result register() {
         return ok(
-                register.render(form(Register.class))
+                register.render()
         );
     }
 
     public static Result createUser() {
-        Form<Register> registerForm = Form.form(Register.class).bindFromRequest();
-        if (registerForm.hasErrors() || user.findByEmail(registerForm.get().email) != null) {
+        JsonNode registerForm = request().body().asJson();
+        if (user.findByEmail(registerForm.get("email").asText()) != null) {
             flash("error", "User already exist/or form has errors");
-            return badRequest(register.render(registerForm));
+            return badRequest(register.render());
         } else {
             session().clear();
-            String email = registerForm.get().email;
-            String name = registerForm.get().name;
-            String password = registerForm.get().password;
-            user.szKor role = registerForm.get().role;
+            String email = registerForm.get("email").asText();
+            String name = registerForm.get("name").asText();
+            String password = registerForm.get("password").asText();
+            user.szKor role = user.szKor.valueOf(registerForm.get("uRole").asText());
             user.create(email, name, password, role);
             flash("success", "User created");
-            return redirect(controllers.routes.Application.dashboard());
+            return ok();
         }
     }
 
-    public static Result users() {
+    public static Result delete(String id){
+        user.find.ref(id).delete();
+        return ok();
+    }
 
-        ObjectMapper mapper = new ObjectMapper();
-        List<user> userList = new ArrayList<>();
+    public static Result users() {
+        List<user> userList;
         userList = user.findAll();
         JsonNode users = Json.toJson(userList);
         if (userList.isEmpty()) {
@@ -65,6 +63,7 @@ public class Users extends Controller{
 
         @Constraints.Required
         public String email;
+        @Constraints.Required
         public String name;
         @Constraints.Required
         public String password;
